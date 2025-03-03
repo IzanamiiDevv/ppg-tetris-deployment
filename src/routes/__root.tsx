@@ -1,4 +1,9 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import PlugPlayGo from "../assets/PlugPlayGoLogo.png";
+import blueTriangle from "../assets/blue-triangle.png";
+import greenSquare from "../assets/green-square.png";
+import redX from "../assets/red-x.png";
+import yellowCircle from "../assets/yellow-circle.png";
 
 const colors = [
   // "bg-red-500/90",
@@ -20,20 +25,45 @@ const char = ["P", "P", "G", ""];
 export const Route = createRootRoute({
   component: () => (
     <>
-      <div className="relative flex"></div>
-      <div className="absolute inset-0 mb-96 flex justify-center items-center pointer-events-none">
+      <div className="flex"></div>
+      <div className="flex justify-between ml-16 mr-16 mt-2 items-center pointer-events-none">
+        <img
+          src={PlugPlayGo}
+          alt="Plug Play Go Logo"
+          className="w-[200px] h-[70px]"
+        />
         <div className="flex gap-4 pointer-events-auto text-xl mt-2">
           <Link
             to="/"
             className="[&.active]:text-green-700 hover:text-green-700 [&.active]:font-bold"
           >
-            Home
+            <img
+              src={blueTriangle}
+              alt="Home Blue Triangle"
+              className="w-[50px] h-[50px]"
+            />
+          </Link>
+          <Link
+            to="/play"
+            className="[&.active]:text-green-700 [&.active]:font-bold hover:text-green-700"
+          >
+            <img
+              src={yellowCircle}
+              alt="Play Yellow Circle"
+              className="w-[50px] h-[50px]"
+            />
           </Link>
           <Link
             to="/about"
             className="[&.active]:text-green-700 [&.active]:font-bold hover:text-green-700"
           >
-            About
+            <img src={redX} alt="Red X" className="w-[50px] h-[50px]" />
+          </Link>
+          <Link
+            to="/play"
+            className="[&.active]:text-green-700 [&.active]:font-bold hover:text-green-700"
+          >
+            <img src={greenSquare} alt="Red X" className="w-[50px] h-[50px]" />
           </Link>
         </div>
       </div>

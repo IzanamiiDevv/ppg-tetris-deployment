@@ -29,7 +29,9 @@ const ReactTetris = () => {
       {!start ? (
         <button
           onClick={() => setStart(true)}
-          className="bg-green-500 text-white px-6 py-3 rounded text-lg hover:bg-green-600 transition"
+          className="relative px-6 py-2 mt-4 text-white font-semibold bg-green-500 rounded-lg overflow-hidden shadow-md transition-all duration-300 ease-in-out
+        before:absolute before:inset-0 before:bg-white/20 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 
+        hover:before:scale-x-100 hover:text-green-900 hover:border-green-500 hover:border-2"
         >
           Start Game
         </button>

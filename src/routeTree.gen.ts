@@ -11,11 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as RoadMapImport } from './routes/road-map'
 import { Route as PlayImport } from './routes/play'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const RoadMapRoute = RoadMapImport.update({
+  id: '/road-map',
+  path: '/road-map',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const PlayRoute = PlayImport.update({
   id: '/play',
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayImport
       parentRoute: typeof rootRoute
     }
+    '/road-map': {
+      id: '/road-map'
+      path: '/road-map'
+      fullPath: '/road-map'
+      preLoaderRoute: typeof RoadMapImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +83,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/play': typeof PlayRoute
+  '/road-map': typeof RoadMapRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/play': typeof PlayRoute
+  '/road-map': typeof RoadMapRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +98,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/play': typeof PlayRoute
+  '/road-map': typeof RoadMapRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/play'
+  fullPaths: '/' | '/about' | '/play' | '/road-map'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/play'
-  id: '__root__' | '/' | '/about' | '/play'
+  to: '/' | '/about' | '/play' | '/road-map'
+  id: '__root__' | '/' | '/about' | '/play' | '/road-map'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +114,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   PlayRoute: typeof PlayRoute
+  RoadMapRoute: typeof RoadMapRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PlayRoute: PlayRoute,
+  RoadMapRoute: RoadMapRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/play"
+        "/play",
+        "/road-map"
       ]
     },
     "/": {
@@ -128,6 +148,9 @@ export const routeTree = rootRoute
     },
     "/play": {
       "filePath": "play.tsx"
+    },
+    "/road-map": {
+      "filePath": "road-map.tsx"
     }
   }
 }

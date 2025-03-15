@@ -64,7 +64,7 @@ export const Route = createRootRoute({
               alt="Green Square"
               className="w-[40px] h-[40px] transition-transform duration-500 ease-in-out hover:scale-110"
             />
-            <span className="absolute left-1/2 -translate-x-1/2 top-[40px] text-blue-700 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-[&.active]:opacity-100">
+            <span className="absolute left-1/2 -translate-x-1/2 top-[40px] text-blue-700 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-[&.active]:opacity-100 text-center">
               Road Map
             </span>
           </Link>

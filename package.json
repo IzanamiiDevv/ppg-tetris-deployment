@@ -17,9 +17,15 @@
     "@tanstack/react-router": "^1.105.0",
     "@tanstack/zod-form-adapter": "^0.42.0",
     "axios": "^1.7.9",
+    "bootstrap": "^5.3.3",
+    "ethers": "5.7.2",
+    "motion": "^12.4.12",
     "plug-play-go": "file:",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
+    "react-tetris": "^0.4.0",
+    "styled-components": "^6.1.15",
     "zod": "^3.24.2"
   },
   "devDependencies": {

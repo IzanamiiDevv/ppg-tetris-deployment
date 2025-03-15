@@ -6,7 +6,7 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   return (
-    <div className="p-2 text-2xl font-semibold text-center max-w-[1200px] mx-auto">
+    <div className="p-2 text-2xl font-semibold text-center max-w-[1200px] mx-auto text-blue-700">
       <h1 className="text-4xl mb-4 mt-12">About Us</h1>
       <div className="text-xl mx-auto max-w-[1200px] font-recursive text-left">
         At PlugPlayGo, we believe GameFi should be fun, accessible, and truly

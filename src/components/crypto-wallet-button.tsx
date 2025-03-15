@@ -1,62 +1,81 @@
 import { ethers } from "ethers";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
-function CryptoWallet() {
-  const [data, setdata] = useState({
+// Define the shape of our component's state
+interface WalletData {
+  address: string;
+  balance: string;
+}
+
+// Extend the Window interface to include ethereum
+declare global {
+  interface Window {
+    ethereum?: ethers.providers.ExternalProvider;
+  }
+}
+
+const CryptoWallet: React.FC = () => {
+  const [data, setData] = useState<WalletData>({
     address: "",
-    Balance: null,
+    balance: "0",
   });
 
-  // Button handler button for handling a
-  // request event for metamask
-  const btnhandler = () => {
-    // Asking if metamask is already present or not
+  // Function to handle account changes
+  const accountChangeHandler = async (account: string) => {
+    // Update address in state
+    setData((prevData) => ({
+      ...prevData,
+      address: account,
+    }));
+
+    // Fetch and update balance
+    await getBalance(account);
+  };
+
+  // Function to get the balance of an address
+  const getBalance = async (address: string) => {
     if (window.ethereum) {
-      // res[0] for fetching a first wallet
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((res) => accountChangeHandler(res[0]));
-    } else {
-      alert("install metamask extension!!");
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const balance = await provider.getBalance(address);
+      setData((prevData) => ({
+        ...prevData,
+        balance: ethers.utils.formatEther(balance),
+      }));
     }
   };
 
-  // getbalance function for getting a balance in
-  // a right format with help of ethers
-  const getbalance = (address) => {
-    // Requesting balance method
-    window.ethereum
-      .request({
-        method: "eth_getBalance",
-        params: [address, "latest"],
-      })
-      .then((balance) => {
-        // Setting balance
-        setdata({
-          Balance: ethers.utils.formatEther(balance),
+  // Function to handle button click
+  const btnHandler = async () => {
+    if (window.ethereum) {
+      try {
+        const accounts = await window.ethereum?.request?.({
+          method: "eth_requestAccounts",
         });
-      });
-  };
-
-  // Function for getting handling all events
-  const accountChangeHandler = (account) => {
-    // Setting an address data
-    setdata({
-      address: account,
-    });
-
-    // Setting a balance
-    getbalance(account);
+        if (accounts.length > 0) {
+          await accountChangeHandler(accounts[0]);
+        }
+      } catch (err) {
+        console.error("Error connecting to metamask", err);
+      }
+    } else {
+      alert("Please install MetaMask extension!");
+    }
   };
 
   return (
     <div>
-      <Button onClick={btnhandler} variant="primary">
+      <Button onClick={btnHandler} variant="primary">
         Connect to wallet
       </Button>
+      {data.address && (
+        <div>
+          <p>Address: {data.address}</p>
+          <p>Balance: {data.balance} ETH</p>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default CryptoWallet;

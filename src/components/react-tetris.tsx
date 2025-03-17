@@ -133,7 +133,7 @@ const ReactTetris = () => {
 
   return (
     <div className="flex flex-col items-center font-pixelify text-gray-600">
-      <h1 className="text-2xl font-bold mb-4 text-gray-700">Tetris</h1>
+      <h1 className="text-2xl font-bold text-gray-700">Tetris</h1>
 
       {!start ? (
         <button
@@ -175,7 +175,7 @@ const ReactTetris = () => {
                 <div className="flex flex-col items-center">
                   <div className="flex gap-4 items-start">
                     <div className="flex flex-col items-center">
-                      <p className="text-sm uppercase mb-2">Hold</p>
+                      <p className="text-lg mt-6 uppercase mb-2">Hold</p>
                       <div className="bg-gray-100 p-2 rounded">
                         <HeldPiece />
                       </div>
@@ -203,56 +203,54 @@ const ReactTetris = () => {
                       )}
                     </div>
                     <div className="flex flex-col items-center">
-                      <p className="text-sm uppercase mb-2">Next</p>
+                      <p className="text-lg mt-6 uppercase mb-2">Next</p>
                       <div
                         className="bg-gray-100 p-2 rounded overflow-hidden"
-                        style={{ height: "110px" }}
+                        style={{ height: "300px" }}
                       >
                         <PieceQueue />
                       </div>
                       <div className="mt-2 bg-gray-100 p-2 rounded w-full">
                         <div className="flex flex-col">
                           <div className="flex justify-between items-center mb-1">
-                            <span className="text-xs uppercase tracking-wide">
+                            <span className="text-lg uppercase tracking-wide">
                               points
                             </span>
-                            <span className="text-sm font-semibold text-gray-500">
+                            <span className="text-lg font-semibold text-gray-500">
                               {points.toString().padStart(4, "0")}
                             </span>
                           </div>
                           <div className="flex justify-between items-center mb-1">
-                            <span className="text-xs uppercase tracking-wide">
+                            <span className="text-lg uppercase tracking-wide">
                               lines
                             </span>
-                            <span className="text-sm font-semibold text-gray-500">
+                            <span className="text-lg font-semibold text-gray-500">
                               {linesCleared.toString().padStart(4, "0")}
                             </span>
                           </div>
                           <div className="flex justify-between items-center">
-                            <span className="text-xs uppercase tracking-wide">
+                            <span className="text-lg uppercase tracking-wide">
                               level
                             </span>
-                            <span className="text-sm font-semibold text-green-500">
+                            <span className="text-lg font-semibold text-green-500">
                               {gameLevel}
                             </span>
+                          </div>
+                          <div className="mt-6 max-w-md text-[16px] text-gray-500">
+                            <h3 className="font-semibold mb-2">Controls:</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                              <div>← → : Move</div>
+                              <div>↓ : Soft Drop</div>
+                              <div>↑ or X : Rotate CW</div>
+                              <div>Z : Rotate CCW</div>
+                              <div>Space : Hard Drop</div>
+                              <div>C or Shift : Hold</div>
+                              <div>P : Pause</div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="mt-4">
-                    <button
-                      onClick={controller.pause}
-                      className="bg-yellow-500 text-white px-3 py-1 rounded text-sm mr-2 hover:bg-yellow-600 transition"
-                    >
-                      {state === "PAUSED" ? "Resume" : "Pause"}
-                    </button>
-                    <button
-                      onClick={() => handleRestart(controller)}
-                      className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition"
-                    >
-                      Restart
-                    </button>
                   </div>
                 </div>
               );

@@ -115,7 +115,10 @@ function Index() {
             exit="exit"
             variants={pageVariants}
           >
-            <div className="text-4xl text-center">00000{count}</div>
+            <div className="text-2xl text-center font-mono">
+              {String(count).padStart(6, "0")}
+            </div>
+            <div className="text-2xl text-center font-mono">Plays</div>
             <img
               src={splash}
               alt="Splash Image"
@@ -127,7 +130,10 @@ function Index() {
       {show1 && (
         <motion.div initial="hidden" animate="visible" variants={pageVariants}>
           <div className="p-2 text-4xl font-bold text-center flex flex-col justify-center">
-            <div className="text-4xl text-center">00000{count}</div>
+            <div className="text-2xl text-center font-mono">
+              {String(count).padStart(6, "0")}
+            </div>
+            <div className="text-2xl text-center font-mono">Plays</div>
             <div className="text-6xl mx-auto max-w-[1200px] text-blue-700 mt-56 font-recursive text-left">
               <TextAnim />
             </div>

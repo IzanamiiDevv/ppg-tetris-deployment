@@ -7,7 +7,7 @@ import {
   useMotionValue,
   useTransform,
 } from "motion/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import splash from "../assets/Designer_3.jpeg";
 
 export const Route = createFileRoute("/")({

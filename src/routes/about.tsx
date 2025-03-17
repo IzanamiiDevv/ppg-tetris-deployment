@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import PlugPlayGo1 from "../assets/PlugPlayGoLogo1.png";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -7,6 +8,7 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <div className="p-2 text-2xl font-semibold text-center max-w-[1200px] mx-auto text-blue-700">
+      <img src={PlugPlayGo1} alt="Plug Play Go Logo" className="w-xl mx-auto" />
       <h1 className="text-4xl mb-4 mt-12">About Us</h1>
       <div className="text-xl mx-auto max-w-[1200px] font-recursive text-left">
         At PlugPlayGo, we believe GameFi should be fun, accessible, and truly

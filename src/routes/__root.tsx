@@ -1,5 +1,5 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import PlugPlayGo from "../assets/PlugPlayGoLogo.png";
+import PlugPlayGo1 from "../assets/PlugPlayGoLogo1.png";
 import blueTriangle from "../assets/blue-triangle.png";
 import greenSquare from "../assets/green-square.png";
 import redX from "../assets/red-x.png";
@@ -11,7 +11,7 @@ export const Route = createRootRoute({
     <>
       <div className="flex justify-between ml-16 mr-16 mt-2 items-center pointer-events-none">
         <img
-          src={PlugPlayGo}
+          src={PlugPlayGo1}
           alt="Plug Play Go Logo"
           className="w-[200px] h-[70px]"
         />

@@ -8,7 +8,11 @@ const app = new Hono();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://plug-play-go.vercel.app/"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "https://plug-play-go.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -25,10 +29,12 @@ app.post("/players-count", async (c) => {
   return c.json({ message: "Counted Player" });
 });
 
-app.post("/get-tetris-count", async (c) => {
-  const result = await prisma.playerCount.findMany();
+app.get("/get-tetris-count", async (c) => {
+  const totalCount = await prisma.playerCount.aggregate({
+    _sum: { tetrisCount: true },
+  });
 
-  return c.json(result);
+  return c.json({ tetris: totalCount._sum.tetrisCount });
 });
 
 serve(

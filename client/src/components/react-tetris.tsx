@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import Tetris from "react-tetris";
 
 const ReactTetris = () => {
@@ -7,6 +8,12 @@ const ReactTetris = () => {
   const gameStartTimeRef = useRef<number | null>(null);
   const levelTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const tetrisControllerRef = useRef<any>(null);
+
+  async function createTetrisCount({ tetrisCount }: { tetrisCount: number }) {
+    await axios.post("https://ppg-server.onrender.com/players-count", {
+      tetrisCount,
+    });
+  }
 
   useEffect(() => {
     // Prevent default behavior for game control keys
@@ -137,7 +144,10 @@ const ReactTetris = () => {
 
       {!start ? (
         <button
-          onClick={() => setStart(true)}
+          onClick={() => {
+            setStart(true);
+            createTetrisCount({ tetrisCount: 1 });
+          }}
           className="relative px-6 py-2 mt-4 text-white font-semibold bg-green-500 rounded-lg overflow-hidden shadow-md transition-all duration-300 ease-in-out
           before:absolute before:inset-0 before:bg-white/20 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 
           hover:before:scale-x-100 hover:text-green-900 hover:border-green-500 hover:border-2"

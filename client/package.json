@@ -1,6 +1,5 @@
 {
   "name": "plug-play-go",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -16,7 +15,7 @@
     "@tanstack/react-query": "^5.66.5",
     "@tanstack/react-router": "^1.105.0",
     "@tanstack/zod-form-adapter": "^0.42.0",
-    "axios": "^1.7.9",
+    "axios": "^1.8.3",
     "bootstrap": "^5.3.3",
     "ethers": "5.7.2",
     "motion": "^12.4.12",

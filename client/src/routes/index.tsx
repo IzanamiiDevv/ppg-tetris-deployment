@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import axios from "axios";
 import {
   animate,
   AnimatePresence,
@@ -6,7 +7,7 @@ import {
   useMotionValue,
   useTransform,
 } from "motion/react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import splash from "../assets/Designer_3.jpeg";
 
 export const Route = createFileRoute("/")({
@@ -71,6 +72,24 @@ function TextAnim() {
 function Index() {
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
+  const [count, setCount] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchTetrisCount = async () => {
+      try {
+        const res = await axios.get(
+          "https://ppg-server.onrender.com/get-tetris-count"
+        );
+        setCount(res.data.tetris);
+        console.log(res.data.tetris);
+      } catch (error) {
+        console.error("Error fetching Tetris count:", error);
+      }
+    };
+
+    fetchTetrisCount();
+  }, []);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setShow(true);
@@ -96,6 +115,7 @@ function Index() {
             exit="exit"
             variants={pageVariants}
           >
+            <div className="text-4xl text-center">00000{count}</div>
             <img
               src={splash}
               alt="Splash Image"
@@ -107,6 +127,7 @@ function Index() {
       {show1 && (
         <motion.div initial="hidden" animate="visible" variants={pageVariants}>
           <div className="p-2 text-4xl font-bold text-center flex flex-col justify-center">
+            <div className="text-4xl text-center">00000{count}</div>
             <div className="text-6xl mx-auto max-w-[1200px] text-blue-700 mt-56 font-recursive text-left">
               <TextAnim />
             </div>

@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
 import CryptoWallet from "../components/crypto-wallet-button.js";
 import ReactTetris from "../components/react-tetris.js";
 

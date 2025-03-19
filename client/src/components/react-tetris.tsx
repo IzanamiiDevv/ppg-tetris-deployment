@@ -2,12 +2,18 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import Tetris from "react-tetris";
 
+interface TetrisController {
+  moveDown: () => void;
+  // Add other methods as needed
+  restart: () => void;
+}
+
 const ReactTetris = () => {
   const [start, setStart] = useState<boolean>(false);
   const [gameLevel, setGameLevel] = useState<number>(1);
   const gameStartTimeRef = useRef<number | null>(null);
   const levelTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const tetrisControllerRef = useRef<any>(null);
+  const tetrisControllerRef = useRef<TetrisController | null>(null);
   const [text, setText] = useState("PVP");
   const [textPro, setTextPro] = useState("PVP Pro");
 
@@ -98,7 +104,7 @@ const ReactTetris = () => {
   };
 
   // Function to handle game restart
-  const handleRestart = (controller: any) => {
+  const handleRestart = (controller: TetrisController) => {
     // Reset level
     setGameLevel(1);
 
@@ -131,7 +137,7 @@ const ReactTetris = () => {
   };
 
   // Save the controller reference when it's available
-  const captureController = (controller: any) => {
+  const captureController = (controller: TetrisController) => {
     tetrisControllerRef.current = controller;
 
     // Start the auto-drop when the game starts

@@ -1,36 +1,36 @@
-Tetris Game with React & Hono.js
+# Tetris Game with React & Hono.js
 
-📌 Project Overview
+# 📌 Project Overview
 
 This project is a Tetris game built with React.js (Vite) for the frontend and Node.js with Hono.js for the backend. It includes features for tracking the number of players and their game sessions in a database.
 
 🚀 Tech Stack
 
-Frontend (Vite + React)
+- Frontend (Vite + React)
 
-React.js (Vite)
+- React.js (Vite)
 
-Tailwind CSS (for styling)
+- Tailwind CSS (for styling)
 
-react-tetris (Tetris game logic)
+- react-tetris (Tetris game logic)
 
-Axios (for API calls)
+- Axios (for API calls)
 
-@tanstack/react-router (for routing)
+- @tanstack/react-router (for routing)
 
-Motion (for animations)
+- Motion (for animations)
 
-Backend (Node.js + Hono.js)
+- Backend (Node.js + Hono.js)
 
-Hono.js (lightweight backend framework)
+- Hono.js (lightweight backend framework)
 
-Prisma (ORM for database interactions)
+- Prisma (ORM for database interactions)
 
-PostgreSQL (database)
+- PostgreSQL (database)
 
-Render (for hosting the backend)
+- Render (for hosting the backend)
 
-🔧 Installation & Setup
+### 🔧 Installation & Setup
 
 1. Clone the Repository
 
@@ -39,39 +39,39 @@ cd tetris-game
 
 2. Install Dependencies
 
-Frontend
+### Frontend
 
-cd frontend
-npm install
+- cd frontend
+- npm install
 
-Backend
+### Backend/Server
 
-cd backend
-npm install
+- cd server
+- npm install
 
 3. Set Up Environment Variables
 
-Create a .env file in the backend folder and configure your database:
+- Create a .env file in the backend folder and configure your database:
 
-DATABASE_URL=postgresql://your_username:your_password@your_host:your_port/your_database
+- DATABASE_URL=postgresql://your_username:your_password@your_host:your_port/your_database
 
 4. Run the Development Servers
 
-Start Backend (Hono.js)
+- Start Backend (Hono.js)
 
-cd backend
-npm run dev
+- cd server
+- npm run dev
 
-Start Frontend (Vite + React)
+### Start Frontend (Vite + React)
 
-cd frontend
-npm run dev
+- cd frontend
+- npm run dev
 
-📌 Features
+### 📌 Features
 
 ✅ Play classic Tetris 🎮✅ Track player count & game sessions in real-time 📊✅ Lightweight & fast with Vite and Hono.js 🖥️📱✅ Database integration using Prisma & PostgreSQL 🗄️
 
-📡 API Endpoints
+### 📡 API Endpoints
 
 Method
 
@@ -80,7 +80,7 @@ Endpoint
 Description
 
 POST
-
+```
 /players-count
 
 Adds a new player session
@@ -90,13 +90,14 @@ GET
 /get-tetris-count
 
 Fetches total player count
+```
 
-🌎 Deployment
+### 🌎 Deployment
 
-Frontend: Deployed on Vercel
+- Frontend: Deployed on Vercel
 
-Backend: Deployed on Render
+- Backend: Deployed on Render
 
-Database: Hosted on Supabase/PostgreSQL
+- Database: Hosted on Supabase/PostgreSQL
 
-🎉 Enjoy Playing Tetris!
+### 🎉 Enjoy Playing Tetris!

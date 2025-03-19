@@ -8,6 +8,8 @@ const ReactTetris = () => {
   const gameStartTimeRef = useRef<number | null>(null);
   const levelTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const tetrisControllerRef = useRef<any>(null);
+  const [text, setText] = useState("PVP");
+  const [textPro, setTextPro] = useState("PVP Pro");
 
   async function createTetrisCount({ tetrisCount }: { tetrisCount: number }) {
     await axios.post("https://ppg-server.onrender.com/players-count", {
@@ -189,6 +191,18 @@ const ReactTetris = () => {
                       <div className="bg-gray-100 p-2 rounded">
                         <HeldPiece />
                       </div>
+                      <button
+                        className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600 transition"
+                        onClick={() => setText("Coming Soon")}
+                      >
+                        {text}
+                      </button>
+                      <button
+                        className="bg-blue-500 text-white px-4 mt-4 py-2 rounded hover:bg-blue-600 transition"
+                        onClick={() => setTextPro("Coming Soon")}
+                      >
+                        {textPro}
+                      </button>
                     </div>
                     <div
                       className="bg-gray-100 p-2 rounded relative"
@@ -224,7 +238,7 @@ const ReactTetris = () => {
                         <div className="flex flex-col">
                           <div className="flex justify-between items-center mb-1">
                             <span className="text-lg uppercase tracking-wide">
-                              points
+                              Points
                             </span>
                             <span className="text-lg font-semibold text-gray-500">
                               {points.toString().padStart(4, "0")}
@@ -232,7 +246,7 @@ const ReactTetris = () => {
                           </div>
                           <div className="flex justify-between items-center mb-1">
                             <span className="text-lg uppercase tracking-wide">
-                              lines
+                              Lines
                             </span>
                             <span className="text-lg font-semibold text-gray-500">
                               {linesCleared.toString().padStart(4, "0")}
@@ -240,7 +254,7 @@ const ReactTetris = () => {
                           </div>
                           <div className="flex justify-between items-center">
                             <span className="text-lg uppercase tracking-wide">
-                              level
+                              Level
                             </span>
                             <span className="text-lg font-semibold text-green-500">
                               {gameLevel}

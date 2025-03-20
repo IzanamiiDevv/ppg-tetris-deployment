@@ -240,7 +240,7 @@ export default function Snake() {
       <div
         ref={gameContainerRef}
         id="gameContainer"
-        className="w-[40vw] h-[40vw] bg-indigo-600 border-8 border-slate-500 rounded-lg shadow-lg grid grid-cols-40"
+        className="w-[40vw] h-[40vw] bg-blue-700 border-8 border-yellow-400 rounded-lg shadow-lg grid grid-cols-40"
         style={{
           gridTemplateColumns: `repeat(${GAME_PIXEL_COUNT}, 1fr)`,
           gridTemplateRows: `repeat(${GAME_PIXEL_COUNT}, 1fr)`,
@@ -274,7 +274,7 @@ export default function Snake() {
           </button>
           <button
             id="downButton"
-            className="text-5xl"
+            className="text-5xl mt-8"
             onClick={() => changeDirection(DOWN_DIR)}
           >
             🔽
@@ -304,8 +304,8 @@ export default function Snake() {
         }
         
         .snakeBodyPixel {
-          background-color: #50C878;
-          box-shadow: 0 0 5px #50C878;
+          background-color: #4ADE80;
+          box-shadow: 0 0 5px #15803D;
           border-radius: 20%;
         }
         

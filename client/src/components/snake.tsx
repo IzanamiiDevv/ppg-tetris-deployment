@@ -1,9 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-
-export const Route = createFileRoute("/snake")({
-  component: Snake,
-});
 
 export default function Snake() {
   const GAME_PIXEL_COUNT = 40;
@@ -12,6 +7,7 @@ export default function Snake() {
   const [totalFoodAte, setTotalFoodAte] = useState(0);
   const [totalDistanceTravelled, setTotalDistanceTravelled] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [start, setStart] = useState(false);
 
   // Constants for directions
   const LEFT_DIR = 37;
@@ -30,6 +26,9 @@ export default function Snake() {
   const moveSnakeIntervalRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
+    // Not working thou
+    if (start) return;
+
     const gameContainer = gameContainerRef.current;
     if (!gameContainer) return;
 
@@ -237,10 +236,19 @@ export default function Snake() {
 
   return (
     <div className="flex flex-col items-center">
+      <h1 className="text-2xl font-bold text-gray-700">Snake</h1>
+      <button
+        className="relative px-6 py-2 mt-4 text-white font-semibold bg-green-500 rounded-lg overflow-hidden shadow-md transition-all duration-300 ease-in-out
+          before:absolute before:inset-0 before:bg-white/20 before:scale-x-0 before:origin-left before:transition-transform before:duration-300 
+          hover:before:scale-x-100 hover:text-green-900 hover:border-green-500 hover:border-2 mb-8"
+        onClick={() => setStart(true)}
+      >
+        Start Game
+      </button>
       <div
         ref={gameContainerRef}
         id="gameContainer"
-        className="w-[40vw] h-[40vw] bg-blue-700 border-8 border-yellow-400 rounded-lg shadow-lg grid grid-cols-40"
+        className="w-[30vw] h-[30vw] bg-blue-700 border-8 border-yellow-400 rounded-lg shadow-lg grid grid-cols-40"
         style={{
           gridTemplateColumns: `repeat(${GAME_PIXEL_COUNT}, 1fr)`,
           gridTemplateRows: `repeat(${GAME_PIXEL_COUNT}, 1fr)`,

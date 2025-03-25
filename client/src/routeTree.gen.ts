@@ -11,19 +11,12 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SnakeImport } from './routes/snake'
 import { Route as RoadMapImport } from './routes/road-map'
 import { Route as PlayImport } from './routes/play'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
-
-const SnakeRoute = SnakeImport.update({
-  id: '/snake',
-  path: '/snake',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const RoadMapRoute = RoadMapImport.update({
   id: '/road-map',
@@ -81,13 +74,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoadMapImport
       parentRoute: typeof rootRoute
     }
-    '/snake': {
-      id: '/snake'
-      path: '/snake'
-      fullPath: '/snake'
-      preLoaderRoute: typeof SnakeImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -98,7 +84,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/play': typeof PlayRoute
   '/road-map': typeof RoadMapRoute
-  '/snake': typeof SnakeRoute
 }
 
 export interface FileRoutesByTo {
@@ -106,7 +91,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/play': typeof PlayRoute
   '/road-map': typeof RoadMapRoute
-  '/snake': typeof SnakeRoute
 }
 
 export interface FileRoutesById {
@@ -115,15 +99,14 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/play': typeof PlayRoute
   '/road-map': typeof RoadMapRoute
-  '/snake': typeof SnakeRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/play' | '/road-map' | '/snake'
+  fullPaths: '/' | '/about' | '/play' | '/road-map'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/play' | '/road-map' | '/snake'
-  id: '__root__' | '/' | '/about' | '/play' | '/road-map' | '/snake'
+  to: '/' | '/about' | '/play' | '/road-map'
+  id: '__root__' | '/' | '/about' | '/play' | '/road-map'
   fileRoutesById: FileRoutesById
 }
 
@@ -132,7 +115,6 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   PlayRoute: typeof PlayRoute
   RoadMapRoute: typeof RoadMapRoute
-  SnakeRoute: typeof SnakeRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -140,7 +122,6 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   PlayRoute: PlayRoute,
   RoadMapRoute: RoadMapRoute,
-  SnakeRoute: SnakeRoute,
 }
 
 export const routeTree = rootRoute
@@ -156,8 +137,7 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/play",
-        "/road-map",
-        "/snake"
+        "/road-map"
       ]
     },
     "/": {
@@ -171,9 +151,6 @@ export const routeTree = rootRoute
     },
     "/road-map": {
       "filePath": "road-map.tsx"
-    },
-    "/snake": {
-      "filePath": "snake.tsx"
     }
   }
 }

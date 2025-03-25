@@ -15,6 +15,7 @@ import { Route as RoadMapImport } from './routes/road-map'
 import { Route as PlayImport } from './routes/play'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as PlayGameImport } from './routes/play.$game'
 
 // Create/Update Routes
 
@@ -40,6 +41,12 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const PlayGameRoute = PlayGameImport.update({
+  id: '/$game',
+  path: '/$game',
+  getParentRoute: () => PlayRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -74,53 +81,73 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoadMapImport
       parentRoute: typeof rootRoute
     }
+    '/play/$game': {
+      id: '/play/$game'
+      path: '/$game'
+      fullPath: '/play/$game'
+      preLoaderRoute: typeof PlayGameImport
+      parentRoute: typeof PlayImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface PlayRouteChildren {
+  PlayGameRoute: typeof PlayGameRoute
+}
+
+const PlayRouteChildren: PlayRouteChildren = {
+  PlayGameRoute: PlayGameRoute,
+}
+
+const PlayRouteWithChildren = PlayRoute._addFileChildren(PlayRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/play': typeof PlayRoute
+  '/play': typeof PlayRouteWithChildren
   '/road-map': typeof RoadMapRoute
+  '/play/$game': typeof PlayGameRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/play': typeof PlayRoute
+  '/play': typeof PlayRouteWithChildren
   '/road-map': typeof RoadMapRoute
+  '/play/$game': typeof PlayGameRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/play': typeof PlayRoute
+  '/play': typeof PlayRouteWithChildren
   '/road-map': typeof RoadMapRoute
+  '/play/$game': typeof PlayGameRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/play' | '/road-map'
+  fullPaths: '/' | '/about' | '/play' | '/road-map' | '/play/$game'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/play' | '/road-map'
-  id: '__root__' | '/' | '/about' | '/play' | '/road-map'
+  to: '/' | '/about' | '/play' | '/road-map' | '/play/$game'
+  id: '__root__' | '/' | '/about' | '/play' | '/road-map' | '/play/$game'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  PlayRoute: typeof PlayRoute
+  PlayRoute: typeof PlayRouteWithChildren
   RoadMapRoute: typeof RoadMapRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  PlayRoute: PlayRoute,
+  PlayRoute: PlayRouteWithChildren,
   RoadMapRoute: RoadMapRoute,
 }
 
@@ -147,10 +174,17 @@ export const routeTree = rootRoute
       "filePath": "about.tsx"
     },
     "/play": {
-      "filePath": "play.tsx"
+      "filePath": "play.tsx",
+      "children": [
+        "/play/$game"
+      ]
     },
     "/road-map": {
       "filePath": "road-map.tsx"
+    },
+    "/play/$game": {
+      "filePath": "play.$game.tsx",
+      "parent": "/play"
     }
   }
 }

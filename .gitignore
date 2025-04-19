@@ -1,0 +1,57 @@
+# Client
+
+# Client Logs
+client/logs
+client/*.log
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+client/pnpm-debug.log*
+client/lerna-debug.log*
+
+client/node_modules
+client/dist
+client/dist-ssr
+client/*.local
+
+# Client Editor directories and files
+client/.vscode/*
+!client/.vscode/extensions.json
+client/.idea
+client/.DS_Store
+client/*.suo
+client/*.ntvs*
+client/*.njsproj
+client/*.sln
+client/*.sw?
+
+# Server
+
+# Server Dev
+server/.yarn/
+!server/.yarn/releases
+server/.vscode/*
+!server/.vscode/launch.json
+!server/.vscode/*.code-snippets
+server/.idea/workspace.xml
+server/.idea/usage.statistics.xml
+server/.idea/shelf
+
+# Server Deps
+server/node_modules/
+
+# Server Env
+server/.env
+server/.env.production
+
+# Server Logs
+server/logs/
+server/*.log
+server/npm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+server/pnpm-debug.log*
+server/lerna-debug.log*
+
+# Server Misc
+server/.DS_Store

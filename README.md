@@ -4,33 +4,33 @@
 
 This project is a Tetris game built with React.js (Vite) for the frontend and Node.js with Hono.js for the backend. It includes features for tracking the number of players and their game sessions in a database.
 
-🚀 Tech Stack
+## 🚀 Tech Stack
+### Frontend
+- Vite
 
-- Frontend (Vite + React)
+- React Type Script
 
-- React.js (Vite)
+- Tailwind CSS (styling)
 
-- Tailwind CSS (for styling)
-
-- react-tetris (Tetris game logic)
-
-- Axios (for API calls)
+- React Tetris (Tetris game logic)
 
 - @tanstack/react-router (for routing)
 
 - Motion (for animations)
 
-- Backend (Node.js + Hono.js)
+### Backend
+- NodeJS
 
-- Hono.js (lightweight backend framework)
+- ExpressJS
 
 - Prisma (ORM for database interactions)
 
 - PostgreSQL (database)
 
-- Render (for hosting the backend)
 
-### 🔧 Installation & Setup
+
+
+## 🔧 Installation & Setup
 
 1. Clone the Repository
 

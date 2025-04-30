@@ -5,7 +5,25 @@ export const Route = createFileRoute("/about")({
   component: About,
 });
 
+import { Server } from "../utils/Server";
+import { useEffect } from "react";
+
 function About() {
+
+  useEffect(() => {
+    const buffer = Server.setStream((stream) => {
+      stream.listen("test", (data) => {
+        console.log(data);
+      });
+    });
+
+    Server.run("test", null, "Hello World");
+
+    return () => {
+      Server.clean(buffer);
+    }
+  }, []);
+
   return (
     <div className="p-2 text-2xl font-semibold text-center max-w-[1200px] mx-auto text-blue-700">
       <img src={PlugPlayGo1} alt="Plug Play Go Logo" className="w-xl mx-auto" />

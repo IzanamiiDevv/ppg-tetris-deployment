@@ -5,7 +5,14 @@ export const Route = createFileRoute("/road-map")({
   component: RoadMap,
 });
 
+import { useEffect } from "react";
+import Server from "../utils/Server";
+
 function RoadMap() {
+  useEffect(() => {
+    Server.run("test", null, "Hello World");
+  }, []);
+
   return (
     <div>
       <h1 className="text-4xl text-center mt-10">Cryptic Road Map</h1>

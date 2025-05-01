@@ -8,5 +8,9 @@ export type Events = (typeof predefinedEvents)[number];
 export type Stream = {
     listen<T extends unknown[]>(event: Event, listener: (...args: T) => void): void;
 };
-
-export type DataBaseTable = number[][];
+export interface ActiveUserType {
+    id: number,
+    socketID: string,
+    name: string
+}
+export type ActiveUserCallback = (data: ActiveUserType[]) => void;

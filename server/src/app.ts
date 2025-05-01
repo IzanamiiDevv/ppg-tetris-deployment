@@ -4,7 +4,7 @@ import { Server, Socket } from "socket.io";
 import http from "http";
 import dotenv from "dotenv";
 import { PrismaClient } from '@prisma/client'
-import { SERVER, PORT, IO, ClientRequest, ROOM } from "./ServerTypes";
+import { SERVER, PORT, IO, ClientRequest, ROOM, ValidationMethod, ActiveUserType } from "./ServerTypes";
 dotenv.config();
 
 const app = express();
@@ -18,18 +18,24 @@ const io: IO = new Server(server, {
   }
 });
 
-
 app.use(cors({
-  origin: process.env.CLIENT_URL
+  origin: "*",
 }));
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.status(200).send("Active");
+prisma.$connect().catch(() => {
+  console.log("Cant Connect to DataBase");
+  process.exit(1);
 });
 
-io.on("connection", (socket: Socket) => {
+io.on("connection", async (socket: Socket) => {
   console.log("New connection:", socket.id);
+  await prisma.activeUser.create({
+    data: {
+      socketID: socket.id,
+      name: 'USER[default]',
+    },
+  });
 
   socket.on("0x53:runEvent", (data: ClientRequest) => {
     const { _event, _target, _data } = data;
@@ -53,33 +59,69 @@ io.on("connection", (socket: Socket) => {
     console.log(`Socket ${socket.id} left room ${room}`);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log("Connection Disconnected:", socket.id);
+    await prisma.activeUser.deleteMany({
+      where: {
+        socketID: socket.id,
+      },
+    });
+  });
+});
+
+function validateRequest(clientID: string | undefined, origin: string | undefined): Promise<number> {
+  return new Promise(async (resolve: ValidationMethod, reject: ValidationMethod) => {
+    if(clientID == undefined || process.env.CLIENT_URL != origin || origin == undefined) reject(401);
+    const found = await prisma.activeUser.findFirst({
+      where: { socketID: clientID },
+    });
+    if(found == null) reject(401);
+    resolve(200);
+  });
+}
+
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).send("Active");
+});
+
+app.get("/testAuth", async (req: Request, res: Response) => {
+  const clientID: string | undefined = req.headers.from;
+  const origin: string | undefined = req.get('Origin') || req.get('Referer') || req.get('Host');
+  validateRequest(clientID, origin).then((status) => {
+    res.status(status).send("Welcome to Server"); 
+  }).catch((status) => {
+    res.status(status).send("Sorry we cant authorize your request.");
+  });
+});
+
+app.get("/testAny", (req: Request, res: Response) => {
+  res.status(200).send("Hello World!!");
+});
+
+app.get("/getActiveUsers", (req: Request, res: Response) => {
+  const clientID: string | undefined = req.headers.from;
+  const origin: string | undefined = req.get('Origin') || req.get('Referer') || req.get('Host');
+  validateRequest(clientID, origin).then(async (status) => {
+    const data: ActiveUserType[] = await prisma.activeUser.findMany();
+    res.status(status).json(data);
+  }).catch((status) => {
+    res.status(status).send("Sorry we cant authorize your request.");
   });
 });
 
 server.listen(port, () => {
   console.log(`Server: http://localhost:${port}`);
-  console.log()
 });
 
-async function main() {
-  const allUsers = await prisma.activeUser.findMany();
-  const newUser = await prisma.activeUser.create({
-    data: {
-      socketID: 'abc123',
-      name: 'Rafael',
-    },
-  });
+const shutdown = async () => {
+  console.log("Cleaning Database...");
+  await prisma.activeUser.deleteMany();
+  console.log("Shutting down gracefully...");
+  await prisma.$disconnect();
+  console.log("Database Disconnected");
+  console.log("Server closed");
+  process.exit(0);
+};
 
-  console.log('New user created:', newUser);
-  console.log(allUsers)
-}
-
-main().then(async () => {
-    await prisma.$disconnect()
-}).catch(async (e) => {
-  console.error(e)
-  await prisma.$disconnect()
-  process.exit(1)
-});
+process.on("SIGINT",shutdown);
+process.on('SIGTERM', shutdown); 

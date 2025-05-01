@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { ServerURL, Event, Target, StreamBuffer, StreamCallback } from "./ServerTypes";
+import { ServerURL, Event, Target, StreamBuffer, StreamCallback, ActiveUserType } from "./ServerTypes";
 
 const SERVER: ServerURL = "http://localhost:5172";
 const socket = io(SERVER);
@@ -7,9 +7,16 @@ const socket = io(SERVER);
 class Server {
     private static definedEvent: Event[] = ["connection", "runEvent", "broadcastEvent", "disconnect"] as const;
     private static serverStatus: boolean = false;
-    private static decryptTable() {}
-    private static encryptTable() {}
 
+    private static async getSocket(callback: (socketID: string | undefined) => Promise<void>): Promise<void> {
+        if(socket.connected) {
+            await callback(socket.id);
+        } else {
+            socket.once("connect", async () => {
+                await callback(socket.id);
+            });
+        }
+    }
 
     public static async updateStatus(): Promise<void> {
         try {
@@ -69,12 +76,42 @@ class Server {
             socket.off(event);
         });
     }
+
+    public static async sendGetRequest(route: string, callback: (data: string, id: string | undefined) => void) {
+        const makeRequest = async () => {
+            const response = await fetch(route, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'From': socket.id ?? 'Null'
+                }
+            });
+            const data = await response.text();
+            callback(data, socket.id);
+        };
+    
+        if (socket.connected) {
+            await makeRequest();
+        } else {
+            socket.once("connect", async () => {
+                await makeRequest();
+            });
+        }
+    }
+
+    public static async getActiveUsers(callback: (data: ActiveUserType[]) => void): Promise<void> {
+        this.getSocket(async (socketID) => {
+            const response = await fetch(`${SERVER}/getActiveUsers`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'From': socketID ?? 'Null'
+                }
+            });
+            const data: ActiveUserType[] = await response.json();
+            callback(data);
+        });
+    }
 }
-
-class DataStream {
-
-}
-
-export { DataStream };
 
 export default Server;
